@@ -1,1 +1,1 @@
-export { getAllMenus } from "./service";
+export { getAllMenus, postMenu, deleteMenu } from "./service";

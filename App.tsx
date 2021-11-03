@@ -1,20 +1,8 @@
 import React from "react";
 import { StyleSheet, Text, View, Pressable } from "react-native";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { RootStack } from "./src/navigation";
-
-const HomeScreen = ({ navigation }: any) => (
-  <View style={styles.container}>
-    <Pressable onPress={() => navigation.navigate("Menu")}>
-      <Text>Home</Text>
-    </Pressable>
-  </View>
-);
-const MenuScreen = () => (
-  <View style={styles.container}>
-    <Text>Menu</Text>
-  </View>
-);
+import { HomeScreen, MenuScreen } from "./src/screens";
 
 const Root = () => (
   <RootStack.Navigator initialRouteName="Home">
