@@ -1,0 +1,1 @@
+export { getAllMenus } from "./service";
