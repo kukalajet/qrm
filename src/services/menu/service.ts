@@ -38,7 +38,7 @@ export const getAllMenus = async (): Promise<Menu[] | undefined> => {
  * @returns The created menu.
  */
 export const postMenu = async (payload: {
-  menu: Omit<Menu, "id">;
+  menu: Omit<Menu, "id" | "categories">;
 }): Promise<Menu | undefined> => {
   const source = CancelToken.source();
   const url = `/menus`;

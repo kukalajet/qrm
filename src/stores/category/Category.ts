@@ -1,6 +1,6 @@
-type Menu = {
+type Category = {
   id: string;
   title: string;
   description: string;
-  categories: Category[];
+  foods: Food[];
 };

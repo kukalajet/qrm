@@ -1,11 +1,11 @@
 import create from "zustand";
-import { deleteMenu, getAllMenus, postMenu } from "../../services/menus";
+import { deleteMenu, getAllMenus, postMenu } from "../../services/menu";
 
 type MenuStoreType = {
   menus: Menu[];
   status: Status;
   getAllMenus: () => void;
-  addMenu: (menu: Omit<Menu, "id">) => void;
+  addMenu: (menu: Omit<Menu, "id" | "categories">) => void;
   removeMenu: (id: string) => void;
 };
 
