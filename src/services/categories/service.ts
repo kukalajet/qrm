@@ -35,10 +35,10 @@ export const fetchCategory = async (
  */
 export const createCategory = async (
   menuId: string,
-  category: Omit<Category, "foods">
+  category: Omit<Category, "id" | "foods">
 ): Promise<Category> => {
   const { data } = await http.post<
-    Omit<Category, "foods">,
+    Omit<Category, "id" | "foods">,
     AxiosResponse<Category>
   >(`/menus/${menuId}/categories`, category);
   return data;
