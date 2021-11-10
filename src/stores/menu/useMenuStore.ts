@@ -1,25 +1,31 @@
 import create from "zustand";
-import { deleteMenu, getAllMenus, postMenu } from "../../services/menu";
+import {
+  fetchMenus,
+  createMenu,
+  updateMenu,
+  deleteMenu,
+} from "../../services/menu";
 
 type MenuStoreType = {
   menus: Menu[];
   status: Status;
-  getAllMenus: () => void;
-  addMenu: (menu: Omit<Menu, "id" | "categories">) => void;
-  removeMenu: (id: string) => void;
+  fetchMenus: () => void;
+  createMenu: (menu: Omit<Menu, "id" | "categories">) => void;
+  updateMenu: (menu: Menu) => void;
+  deleteMenu: (id: string) => void;
 };
 
 const useMenuStore = create<MenuStoreType>((set, get) => ({
   menus: [],
   status: Status.Initial,
-  getAllMenus: async () => {
+  fetchMenus: async () => {
     const status = get().status;
     if (status !== Status.Initial) set(() => ({ status: Status.Initial }));
-    const menus = await getAllMenus();
+    const menus = await fetchMenus();
     set((_) => ({ menus: menus || [], status: Status.Success }));
   },
-  addMenu: async (menu) => {
-    const created = await postMenu({ menu });
+  createMenu: async (menu) => {
+    const created = await createMenu(menu);
     if (!created) {
       __DEV__ && console.log(`given menu: ${menu} has not been created`);
       return null;
@@ -28,10 +34,23 @@ const useMenuStore = create<MenuStoreType>((set, get) => ({
     const newMenus = menus.concat(created);
     set((_) => ({ menus: newMenus }));
   },
-  removeMenu: async (id) => {
-    const deleted = await deleteMenu({ id });
+  updateMenu: async (menu) => {
+    const updated = await updateMenu(menu);
+    if (!updated) {
+      __DEV__ && console.log(`given menu #${menu.id} has not been updated`);
+      return null;
+    }
+    const menus = get().menus;
+    const newMenus = menus.map((item) => {
+      if (item.id === menu.id) return menu;
+      return item;
+    });
+    set((_) => ({ menus: newMenus }));
+  },
+  deleteMenu: async (id) => {
+    const deleted = await deleteMenu(id);
     if (!deleted) {
-      __DEV__ && console.log(`given id: ${id} menu has not been deleted`);
+      __DEV__ && console.log(`menu for id #${id} has not been deleted`);
       return null;
     }
     const menus = get().menus;
