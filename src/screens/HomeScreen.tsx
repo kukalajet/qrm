@@ -1,6 +1,7 @@
 import React from "react";
-import { Pressable, View, Text } from "react-native";
+import { SafeAreaView } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { FloatingActionButton } from "../components";
 import { makeStyles } from "../hooks";
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
@@ -13,11 +14,9 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   const styles = useStyles();
 
   return (
-    <View style={styles.container}>
-      <Pressable onPress={() => navigation.navigate("Menu")}>
-        <Text>Home</Text>
-      </Pressable>
-    </View>
+    <SafeAreaView style={styles.container}>
+      <FloatingActionButton onPress={() => navigation.navigate("Menu")} />
+    </SafeAreaView>
   );
 };
 

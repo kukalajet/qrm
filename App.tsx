@@ -1,8 +1,9 @@
 import React from "react";
-import { StyleSheet, Text, View, Pressable } from "react-native";
+import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { RootStack } from "./src/navigation";
 import { HomeScreen, MenuScreen } from "./src/screens";
+import theme from "./src/configs/theme";
 
 const Root = () => (
   <RootStack.Navigator initialRouteName="Home">
@@ -13,7 +14,7 @@ const Root = () => (
 
 export default function App() {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={theme}>
       <Root />
     </NavigationContainer>
   );
