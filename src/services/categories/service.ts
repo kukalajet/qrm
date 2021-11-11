@@ -6,20 +6,20 @@ import { AxiosResponse } from "axios";
  * @param id Menu id
  * @returns All menu's categories
  */
-export const fetchCategories = async (id: string): Promise<Category[]> => {
+export const fetchCategories = async (id: Menu["id"]): Promise<Category[]> => {
   const { data } = await http.get<Category[]>(`/menus/${id}/categories`);
   return data;
 };
 
 /**
- * Retrieves a category given the menu's id and the category id.
+ * Retrieves a category given the menu id and the category id.
  * @param menuId Menu id
  * @param categoryId Category id
  * @returns Menu's category
  */
 export const fetchCategory = async (
-  menuId: string,
-  categoryId: string
+  menuId: Menu["id"],
+  categoryId: Category["id"]
 ): Promise<Category> => {
   const { data } = await http.get<Category>(
     `/menus/${menuId}/categories/${categoryId}`
@@ -34,7 +34,7 @@ export const fetchCategory = async (
  * @returns Created category
  */
 export const createCategory = async (
-  menuId: string,
+  menuId: Menu["id"],
   category: Omit<Category, "id" | "foods">
 ): Promise<Category> => {
   const { data } = await http.post<
@@ -51,7 +51,7 @@ export const createCategory = async (
  * @returns Updated category
  */
 export const updateCategory = async (
-  menuId: string,
+  menuId: Menu["id"],
   category: Omit<Category, "foods">
 ): Promise<Category> => {
   const { data } = await http.put<
@@ -68,8 +68,8 @@ export const updateCategory = async (
  * @returns The deleted category
  */
 export const deleteCategory = async (
-  menuId: string,
-  categoryId: string
+  menuId: Menu["id"],
+  categoryId: Category["id"]
 ): Promise<Category> => {
   const { data } = await http.delete<Category>(
     `/menus/${menuId}/categories/${categoryId}`

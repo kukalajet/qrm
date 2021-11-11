@@ -12,10 +12,10 @@ export const fetchMenus = async (): Promise<Menu[]> => {
 
 /**
  * Retrieves a menu given the id.
- * @param id Menu's id
+ * @param id Menu id
  * @returns Fetched menu
  */
-export const fetchMenu = async (id: string): Promise<Menu> => {
+export const fetchMenu = async (id: Menu["id"]): Promise<Menu> => {
   const { data } = await http.get<Menu>(`/menus/${id}`);
   return data;
 };
@@ -55,7 +55,7 @@ export const updateMenu = async (
  * @param id Menu id
  * @returns Deleted menu
  */
-export const deleteMenu = async (id: string): Promise<Menu> => {
+export const deleteMenu = async (id: Menu["id"]): Promise<Menu> => {
   const { data } = await http.delete<Menu>(`/menus/${id}`);
   return data;
 };
