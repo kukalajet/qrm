@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { RootStack } from "./src/navigation";
 import { HomeScreen, MenuScreen } from "./src/screens";
 import theme from "./src/configs/theme";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 const Root = () => (
   <RootStack.Navigator initialRouteName="Home">
@@ -15,7 +16,9 @@ const Root = () => (
 export default function App() {
   return (
     <NavigationContainer theme={theme}>
-      <Root />
+      <BottomSheetModalProvider>
+        <Root />
+      </BottomSheetModalProvider>
     </NavigationContainer>
   );
 }

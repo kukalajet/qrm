@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { SafeAreaView } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { FloatingActionButton } from "../components";
+import { FloatingActionButton, Modal } from "../components";
 import { makeStyles } from "../hooks";
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
@@ -11,11 +11,13 @@ type HomeScreenNavigationProp = NativeStackNavigationProp<
 type HomeScreenProps = { navigation: HomeScreenNavigationProp };
 
 const HomeScreen = ({ navigation }: HomeScreenProps) => {
+  const [open, setOpen] = useState<boolean>(false);
   const styles = useStyles();
 
   return (
     <SafeAreaView style={styles.container}>
-      <FloatingActionButton onPress={() => navigation.navigate("Menu")} />
+      <Modal open={open} onDismiss={() => setOpen((state) => !state)} />
+      <FloatingActionButton onPress={() => setOpen((state) => !state)} />
     </SafeAreaView>
   );
 };
