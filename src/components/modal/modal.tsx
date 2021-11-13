@@ -1,22 +1,40 @@
 import React, { useCallback, useEffect, useMemo, useRef } from "react";
-import { Text } from "react-native";
+import { View, Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {
   BottomSheetBackdrop,
   BottomSheetBackdropProps,
   BottomSheetModal,
 } from "@gorhom/bottom-sheet";
+import { Feather } from "@expo/vector-icons";
+import { useTheme } from "@react-navigation/native";
+import { makeStyles } from "../../hooks";
 
 type Props = {
   open: boolean;
+  label?: string;
+  description?: string;
   size?: ModalSize;
+  children: React.ReactChild;
+  withClose?: boolean;
   onDismiss: () => void;
+  onRemove?: () => void;
 };
 
-const Modal = ({ open, size = "medium", onDismiss }: Props) => {
+const Modal = ({
+  children,
+  open,
+  label,
+  description,
+  size = "medium",
+  onDismiss,
+  onRemove,
+}: Props) => {
   const bottomSheetRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => getSnapPoints(size), []);
   const { bottom } = useSafeAreaInsets();
+  const { colors } = useTheme();
+  const styles = useStyles();
 
   useEffect(() => {
     if (open) bottomSheetRef.current?.present();
@@ -25,6 +43,10 @@ const Modal = ({ open, size = "medium", onDismiss }: Props) => {
 
   const handleDismiss = useCallback(() => {
     onDismiss();
+  }, []);
+
+  const handleOnRemove = useCallback(() => {
+    if (onRemove) onRemove();
   }, []);
 
   const renderBackdrop = useCallback(
@@ -49,7 +71,25 @@ const Modal = ({ open, size = "medium", onDismiss }: Props) => {
         index={snapPoints.length - 1}
         keyboardBehavior="interactive"
       >
-        <Text>Text</Text>
+        <React.Fragment>
+          {(!!onRemove || !!label) && (
+            <View style={styles.header}>
+              {!!label && <Text style={styles.label}>{label}</Text>}
+              {!!onRemove && (
+                <Feather
+                  name={"x"}
+                  size={24}
+                  color={colors.onBackground}
+                  onPress={handleOnRemove}
+                />
+              )}
+            </View>
+          )}
+          {!!description && (
+            <Text style={styles.description}>{description}</Text>
+          )}
+        </React.Fragment>
+        {children}
       </BottomSheetModal>
     </React.Fragment>
   );
@@ -67,5 +107,24 @@ function getSnapPoints(size: ModalSize): string[] {
       return ["75%"];
   }
 }
+
+const useStyles = makeStyles(() => ({
+  header: {
+    justifyContent: "space-between",
+    alignItems: "center",
+    flexDirection: "row",
+    paddingVertical: 2,
+    paddingHorizontal: 16,
+  },
+  label: {
+    fontWeight: "bold",
+    fontSize: 24,
+  },
+  description: {
+    fontSize: 14,
+    paddingVertical: 2,
+    paddingHorizontal: 16,
+  },
+}));
 
 export default Modal;

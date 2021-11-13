@@ -11,7 +11,6 @@ type Props = {
 
 const FloatingActionButton = ({ iconName = "plus", onPress }: Props) => {
   const [pressed, setPressed] = useState<boolean>(false);
-
   const { colors } = useTheme();
   const styles = useStyles({
     buttonColor: pressed ? colors.primaryVariant : colors.primary,
@@ -26,8 +25,13 @@ const FloatingActionButton = ({ iconName = "plus", onPress }: Props) => {
         onPressOut={() => setPressed(false)}
         style={styles.fab}
       >
-        {/* @ts-expect-error: there is no icon name type provided */}
-        <Feather name={iconName} size={24} color="white" style={styles.icon} />
+        <Feather
+          // @ts-expect-error: there is no icon name type provided
+          name={iconName}
+          size={24}
+          color={colors.onPrimary}
+          style={styles.icon}
+        />
       </Pressable>
     </View>
   );

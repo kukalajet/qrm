@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView, Text, View } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FloatingActionButton, Modal } from "../components";
 import { makeStyles } from "../hooks";
@@ -16,7 +16,21 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Modal open={open} onDismiss={() => setOpen((state) => !state)} />
+      <Modal
+        label="Test Hey"
+        description="Test Hey description"
+        open={open}
+        onRemove={() => setOpen(false)}
+        onDismiss={() => setOpen(false)}
+      >
+        <View
+          style={{
+            height: 100,
+            marginHorizontal: 16,
+            backgroundColor: "red",
+          }}
+        />
+      </Modal>
       <FloatingActionButton onPress={() => setOpen((state) => !state)} />
     </SafeAreaView>
   );
