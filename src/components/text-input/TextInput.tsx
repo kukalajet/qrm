@@ -40,7 +40,6 @@ const TextInput = ({
   width = "100%",
   disabled,
   multiline,
-  pressable,
   onChangeText,
   leadingIcon,
   trailingIcon,
@@ -50,12 +49,8 @@ const TextInput = ({
   const [focused, setFocused] = useState<boolean>(false);
   const [hovered, setHovered] = useState<boolean>(false);
   const [currentValue, setCurrentValue] = useState<string | undefined>(value);
-  const [currentHeight, setCurrentHeight] = useState<
-    number | string | undefined
-  >(height);
 
   const styles = useStyles({
-    height: currentHeight,
     width,
     state,
     focused,
@@ -98,14 +93,6 @@ const TextInput = ({
     setHovered(false);
   };
 
-  const handleOnContainerSizeChange = (
-    event: NativeSyntheticEvent<TextInputContentSizeChangeEventData>
-  ) => {
-    if (multiline) {
-      setCurrentHeight(event.nativeEvent.contentSize.height);
-    }
-  };
-
   return (
     <View
       // @ts-expect-error
@@ -114,24 +101,22 @@ const TextInput = ({
       style={StyleSheet.flatten([styles.container, containerStyle])}
     >
       {!!label && <Text style={styles.label}>{label}</Text>}
-      <View
-        pointerEvents={pressable ? "auto" : "none"}
-        style={styles.inputContainer}
-      >
-        {!!leadingIcon && <View style={styles.icon}>{leadingIcon}</View>}
+      <View style={styles.inputContainer}>
+        {!!leadingIcon && <View style={styles.leadingIcon}>{leadingIcon}</View>}
         <RNTextInput
           value={currentValue}
           placeholder={placeholder}
           onFocus={handleOnFocus}
           onBlur={handleOnBlur}
           onChangeText={handleOnChangeText}
-          onContentSizeChange={handleOnContainerSizeChange}
           multiline={multiline}
           editable={!disabled}
           scrollEnabled={false}
           style={styles.input}
         />
-        {!!trailingIcon && <View style={styles.icon}>{trailingIcon}</View>}
+        {!!trailingIcon && (
+          <View style={styles.trailingIcon}>{trailingIcon}</View>
+        )}
       </View>
       {!!error && !disabled && <Text style={styles.error}>{error}</Text>}
     </View>
@@ -152,7 +137,6 @@ type StylesProps = {
 const useStyles = makeStyles(
   ({
     state,
-    height,
     width,
     focused,
     hovered,
@@ -183,7 +167,7 @@ const useStyles = makeStyles(
         shadowOpacity: 0.125,
         shadowRadius: 2,
         elevation: 2,
-        borderBottomWidth: 3,
+        borderBottomWidth: 2,
       },
       label: {
         color: disabled ? `${colors.onSurface}90` : undefined,
@@ -196,16 +180,24 @@ const useStyles = makeStyles(
         alignItems: "center",
         paddingStart: hasLeadingIcon ? undefined : 8,
         paddingEnd: hasTrailingIcon ? undefined : 8,
-        paddingTop: 16,
-        paddingBottom: 12,
+        paddingTop: 10,
+        paddingBottom: 10,
       },
       error: {
-        fontSize: 16,
-        paddingTop: 1,
+        fontSize: 12,
         paddingHorizontal: 4,
         color: colors.error,
       },
-      icon: { justifyContent: "center", padding: 8 },
+      leadingIcon: {
+        paddingStart: 6,
+        paddingEnd: 2,
+        justifyContent: "center",
+      },
+      trailingIcon: {
+        paddingEnd: 6,
+        paddingStart: 2,
+        justifyContent: "center",
+      },
     };
   }
 );
@@ -221,7 +213,7 @@ function getActiveColors(state?: State, focused?: boolean, hovered?: boolean) {
   if (focused) return colors.primary;
   if (hovered) return colors.primaryVariant;
 
-  return colors.onSurface;
+  return "#90A4AE";
 }
 
 export default TextInput;

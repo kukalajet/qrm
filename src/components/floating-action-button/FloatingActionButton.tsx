@@ -44,6 +44,7 @@ const useStyles = makeStyles(({ pressed }: StylesProps) => {
 
   return {
     container: {
+      alignSelf: "center",
       position: "absolute",
       bottom: 56,
     },

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { SafeAreaView, Text, View } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FloatingActionButton, Modal, TextInput } from "../components";
 import { makeStyles } from "../hooks";
-import { Feather, Ionicons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import { useTheme } from "@react-navigation/native";
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
@@ -19,20 +19,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <TextInput
-        // label="Response"
-        // value="test"
-        // error="second error"
-        // multiline
-        // trailingIcon={<Feather name={"x"} size={24} color={colors.error} />}
-        containerStyle={[
-          {
-            paddingHorizontal: 16,
-            paddingVertical: 8,
-          },
-          { paddingHorizontal: 16 },
-        ]}
-      />
+      <TextInput label="Food name" multiline containerStyle={styles.input} />
       <Modal
         label="Test Hey"
         description="Test Hey description"
@@ -40,13 +27,21 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         onRemove={() => setOpen(false)}
         onDismiss={() => setOpen(false)}
       >
-        <View
-          style={{
-            height: 100,
-            marginHorizontal: 16,
-            backgroundColor: "red",
-          }}
-        />
+        <React.Fragment>
+          <View
+            style={{
+              height: 100,
+              marginHorizontal: 16,
+              backgroundColor: "red",
+            }}
+          />
+          <TextInput
+            label="Beverage name"
+            error="Second error, why don't you type it correctly?"
+            trailingIcon={<Feather name={"x"} size={24} color={colors.error} />}
+            containerStyle={styles.input}
+          />
+        </React.Fragment>
       </Modal>
       <FloatingActionButton onPress={() => setOpen((state) => !state)} />
     </SafeAreaView>
@@ -56,10 +51,10 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
 type StylesProps = {};
 
 const useStyles = makeStyles(({}: StylesProps) => ({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+  container: { flex: 1 },
+  input: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
   },
 }));
 
