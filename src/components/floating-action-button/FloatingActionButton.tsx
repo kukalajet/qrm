@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Pressable, View } from "react-native";
+import { useTheme } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 import { makeStyles } from "../../hooks";
-import { useTheme } from "@react-navigation/native";
 
 type Props = {
   iconName?: string;
@@ -11,11 +11,9 @@ type Props = {
 
 const FloatingActionButton = ({ iconName = "plus", onPress }: Props) => {
   const [pressed, setPressed] = useState<boolean>(false);
+
   const { colors } = useTheme();
-  const styles = useStyles({
-    buttonColor: pressed ? colors.primaryVariant : colors.primary,
-    shadowColor: colors.onBackground,
-  });
+  const styles = useStyles({ pressed: pressed });
 
   return (
     <View style={styles.container}>
@@ -38,27 +36,30 @@ const FloatingActionButton = ({ iconName = "plus", onPress }: Props) => {
 };
 
 type StylesProps = {
-  buttonColor: string;
-  shadowColor: string;
+  pressed: boolean;
 };
 
-const useStyles = makeStyles(({ buttonColor, shadowColor }: StylesProps) => ({
-  container: {
-    position: "absolute",
-    bottom: 56,
-  },
-  fab: {
-    borderRadius: 28,
-    backgroundColor: buttonColor,
-    shadowColor: shadowColor,
-    shadowOffset: { width: 2, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-    elevation: 4,
-  },
-  icon: {
-    padding: 16,
-  },
-}));
+const useStyles = makeStyles(({ pressed }: StylesProps) => {
+  const { colors } = useTheme();
+
+  return {
+    container: {
+      position: "absolute",
+      bottom: 56,
+    },
+    fab: {
+      borderRadius: 28,
+      backgroundColor: pressed ? colors.primaryVariant : colors.primary,
+      shadowColor: colors.onBackground,
+      shadowOffset: { width: 2, height: 2 },
+      shadowOpacity: 0.2,
+      shadowRadius: 2,
+      elevation: 4,
+    },
+    icon: {
+      padding: 16,
+    },
+  };
+});
 
 export default FloatingActionButton;
