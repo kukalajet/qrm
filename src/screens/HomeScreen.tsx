@@ -3,7 +3,6 @@ import { SafeAreaView, View } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FloatingActionButton, Modal, TextInput } from "../components";
 import { makeStyles } from "../hooks";
-import { Feather } from "@expo/vector-icons";
 import { useTheme } from "@react-navigation/native";
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
@@ -19,7 +18,22 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <TextInput label="Food name" multiline containerStyle={styles.input} />
+      <TextInput label="Fo" containerStyle={styles.input} />
+      <TextInput
+        label="Food name Food name Food name"
+        error="Second error, why don't you type it correctly?"
+        containerStyle={styles.input}
+      />
+      <TextInput
+        label="Food name Food"
+        error="Second error, why don't you type it correctly?"
+        containerStyle={styles.input}
+      />
+      <TextInput
+        label="Food name Food Food name Food Food name Fo"
+        error="Second error, why don't you type it correctly?"
+        containerStyle={styles.input}
+      />
       <Modal
         label="Test Hey"
         description="Test Hey description"
@@ -38,7 +52,6 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
           <TextInput
             label="Beverage name"
             error="Second error, why don't you type it correctly?"
-            trailingIcon={<Feather name={"x"} size={24} color={colors.error} />}
             containerStyle={styles.input}
           />
         </React.Fragment>
