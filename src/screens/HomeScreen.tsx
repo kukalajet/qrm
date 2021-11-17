@@ -18,7 +18,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <TextInput label="Fo" containerStyle={styles.input} />
+      <TextInput label="Fo" multiline containerStyle={styles.input} />
       <TextInput
         label="Food name Food name Food name"
         error="Second error, why don't you type it correctly?"

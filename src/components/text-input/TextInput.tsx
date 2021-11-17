@@ -3,100 +3,46 @@ import {
   View,
   Text,
   TextInput as RNTextInput,
-  StyleSheet,
-  StyleProp,
-  ViewStyle,
   NativeSyntheticEvent,
   TextInputFocusEventData,
-  TextLayoutEventData,
+  StyleProp,
+  ViewStyle,
 } from "react-native";
-import Animated, {
-  useAnimatedStyle,
-  withTiming,
-  Easing,
-  interpolate,
-  useDerivedValue,
-  Extrapolate,
-} from "react-native-reanimated";
 import { useTheme } from "@react-navigation/native";
 import { makeStyles } from "../../hooks";
 
 type State = "default" | "error" | "disabled";
 
 type Props = {
-  label?: string;
   value?: string;
   placeholder?: string;
+  label?: string;
   error?: string;
-  width?: number | string;
-  disabled?: boolean;
-  multiline?: boolean;
-  pressable?: boolean;
   onChangeText?: (value: string) => void;
-  icon?: React.ReactElement;
+  multiline?: boolean;
+  disabled?: boolean;
+  width?: string | number;
   containerStyle?: StyleProp<ViewStyle>;
 };
 
-const TimeConfigurations = { duration: 50, easing: Easing.circle };
-
-const TextInput = ({
-  label,
+const NewTextInput = ({
   value,
   placeholder,
+  label,
   error,
-  width = "100%",
-  disabled,
-  multiline,
   onChangeText,
-  icon,
+  multiline,
+  disabled,
+  width = "100%",
   containerStyle,
 }: Props) => {
   const [state, setState] = useState<State>("default");
+  const [currentValue, setCurrentValue] = useState<string | undefined>(value);
   const [focused, setFocused] = useState<boolean>(false);
   const [hovered, setHovered] = useState<boolean>(false);
-  const [currentValue, setCurrentValue] = useState<string | undefined>(value);
-  const [labelWidth, setLabelWidth] = useState<number>(0);
 
-  const transition = useDerivedValue(() => {
-    return focused || hovered || !!currentValue
-      ? withTiming(1, TimeConfigurations)
-      : withTiming(0, TimeConfigurations);
-  });
-  const animatedLabelStyle = useAnimatedStyle(() => {
-    const offset = Math.round((labelWidth - labelWidth * 0.8) / 2);
-    const toX = labelWidth > 32 ? 16 - offset : 16;
-    console.log(`toX: ${toX}`);
-
-    const scale = interpolate(
-      transition.value,
-      [0, 1],
-      [1, 0.8],
-      Extrapolate.CLAMP
-    );
-    const translateY = interpolate(
-      transition.value,
-      [0, 1],
-      [16, 0],
-      Extrapolate.CLAMP
-    );
-    const translateX = interpolate(
-      transition.value,
-      [0, 1],
-      [16, toX],
-      Extrapolate.CLAMP
-    );
-
-    return { transform: [{ scale }, { translateX }, { translateY }] };
-  });
-
-  const styles = useStyles({
-    width,
-    state,
-    focused,
-    hovered,
-    disabled,
-    hasIcon: !!icon,
-  });
+  const color = getActiveColor(state, focused, hovered);
+  const styles = useStyles({ focused, hovered, width, color });
 
   useEffect(() => {
     if (disabled) {
@@ -110,15 +56,8 @@ const TextInput = ({
     setState("default");
   }, [disabled, error]);
 
-  const handleOnChangeText = useCallback((value: string) => {
-    setCurrentValue(value);
-    if (onChangeText) {
-      onChangeText(value);
-    }
-  }, []);
-
   const handleOnFocus = useCallback(
-    (value: NativeSyntheticEvent<TextInputFocusEventData>) => {
+    (_: NativeSyntheticEvent<TextInputFocusEventData>) => {
       setFocused(true);
       setHovered(true);
     },
@@ -126,37 +65,28 @@ const TextInput = ({
   );
 
   const handleOnBlur = useCallback(
-    (value: NativeSyntheticEvent<TextInputFocusEventData>) => {
+    (_: NativeSyntheticEvent<TextInputFocusEventData>) => {
       setFocused(false);
       setHovered(false);
     },
     []
   );
 
-  const handleOnLabelLayout = useCallback(
-    (event: NativeSyntheticEvent<TextLayoutEventData>) => {
-      console.log(`width: ${event.nativeEvent.lines[0].width}`);
-      setLabelWidth(event.nativeEvent.lines[0].width);
-    },
-    []
-  );
+  const handleOnChangeText = useCallback((value: string) => {
+    setCurrentValue(value);
+    if (onChangeText) {
+      onChangeText(value);
+    }
+  }, []);
 
   return (
-    <View
-      // @ts-expect-error
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={StyleSheet.flatten([styles.container, containerStyle])}
-    >
-      <View style={styles.inputContainer}>
-        {!!label && (
-          <Animated.Text
-            onTextLayout={handleOnLabelLayout}
-            style={[styles.label, animatedLabelStyle]}
-          >
-            {label}
-          </Animated.Text>
-        )}
+    <View style={[styles.container, containerStyle]}>
+      {!!label && (
+        <Text numberOfLines={1} style={styles.label}>
+          {label}
+        </Text>
+      )}
+      <View style={styles.field}>
         <RNTextInput
           value={currentValue}
           placeholder={placeholder}
@@ -167,84 +97,89 @@ const TextInput = ({
           editable={!disabled}
           style={styles.input}
         />
-        {!!icon && <View style={styles.icon}>{icon}</View>}
       </View>
-      {!!error && !disabled && <Text style={styles.error}>{error}</Text>}
+      {!!error && (
+        <Text numberOfLines={1} style={styles.error}>
+          {error}
+        </Text>
+      )}
     </View>
   );
 };
 
+function getActiveColor(state?: State, focused?: boolean, hovered?: boolean) {
+  const { colors } = useTheme();
+
+  if (state === "disabled") return `${colors.surface}90`;
+  if (state === "error") {
+    if (focused) return colors.error;
+    if (hovered) return `${colors.error}97`;
+    return `${colors.error}95`;
+  }
+
+  if (focused) return colors.primary;
+  if (hovered) return colors.primaryVariant;
+
+  return colors.secondary;
+}
+
 type StylesProps = {
-  state?: State;
-  height?: number | string;
-  width?: number | string;
   focused?: boolean;
   hovered?: boolean;
-  disabled?: boolean;
-  hasIcon?: boolean;
+  color?: string;
+  width?: string | number;
 };
 
 const useStyles = makeStyles(
-  ({ state, width, focused, hovered, disabled, hasIcon }: StylesProps) => {
+  ({ focused, hovered, color, width }: StylesProps) => {
     const { colors } = useTheme();
-    const activeColor = getActiveColors(state, focused, hovered);
+
+    const shadowOffsetWidth = focused ? 2 : 0;
+    const shadowOffsetHeight = focused ? 2 : 0;
+    const shadowOpacity = focused ? 0.25 : hovered ? 0.125 : 0;
+    const shadowRadius = focused ? 2 : 0;
+    const elevation = focused ? 4 : 0;
 
     return {
       container: {
         width: width,
         justifyContent: "center",
-        shadowColor: colors.onSurface,
       },
-      inputContainer: {
+      field: {
         flexDirection: "row",
-        paddingTop: 16,
-        paddingBottom: 8,
-        paddingHorizontal: 16,
-        borderTopEndRadius: 4,
-        borderBottomWidth: 2,
-        borderTopStartRadius: 4,
-        borderBottomColor: activeColor,
-        backgroundColor: `${colors.onSurface}12`,
-        shadowColor: colors.onPrimary,
-      },
-      label: {
-        position: "absolute",
-        fontSize: 20,
-        color: activeColor,
-        alignItems: "flex-start",
+        justifyContent: "center",
+        alignItems: "center",
+        borderWidth: 2,
+        borderRadius: 8,
+        borderColor: color,
+        shadowColor: color,
+        backgroundColor: colors.surface,
+        shadowOffset: { width: shadowOffsetWidth, height: shadowOffsetHeight },
+        shadowOpacity: shadowOpacity,
+        shadowRadius: shadowRadius,
+        elevation: elevation,
       },
       input: {
         flex: 1,
+        paddingVertical: 6,
+        paddingHorizontal: 8,
         alignItems: "center",
         justifyContent: "center",
         fontSize: 16,
-        paddingTop: 8,
+        color: colors.onSurface,
+      },
+      label: {
+        fontSize: 16,
+        paddingHorizontal: 8,
+        color: colors.onBackground,
       },
       error: {
         fontSize: 12,
-        paddingVertical: 1,
-        paddingHorizontal: 16,
+        paddingHorizontal: 8,
         color: colors.error,
-      },
-      icon: {
-        justifyContent: "center",
       },
     };
   }
 );
 
-function getActiveColors(state?: State, focused?: boolean, hovered?: boolean) {
-  const { colors } = useTheme();
-
-  if (state === "error") {
-    if (hovered) return colors.error;
-    return `${colors.error}95`;
-  }
-  if (state === "disabled") return `${colors.surface}90`;
-  if (focused) return colors.primary;
-  if (hovered) return colors.primaryVariant;
-
-  return "#90A4AE";
-}
-
-export default TextInput;
+export default NewTextInput;
