@@ -20,17 +20,19 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
     <SafeAreaView style={styles.container}>
       <TextInput label="Fo" multiline containerStyle={styles.input} />
       <TextInput
-        label="Food name Food name Food name"
-        error="Second error, why don't you type it correctly?"
-        containerStyle={styles.input}
-      />
-      <TextInput
         label="Food name Food"
         error="Second error, why don't you type it correctly?"
         containerStyle={styles.input}
       />
       <TextInput
-        label="Food name Food Food name Food Food name Fo"
+        label="Food name Food"
+        placeholder="Food name placeholder"
+        containerStyle={styles.input}
+      />
+      <TextInput
+        disabled
+        label="Food name Food"
+        placeholder="Food name placeholder"
         error="Second error, why don't you type it correctly?"
         containerStyle={styles.input}
       />
@@ -44,13 +46,30 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         <React.Fragment>
           <View
             style={{
-              height: 100,
+              height: 50,
               marginHorizontal: 16,
               backgroundColor: "red",
             }}
           />
           <TextInput
-            label="Beverage name"
+            label="Food name Food"
+            multiline
+            containerStyle={styles.input}
+          />
+          <TextInput
+            label="Food name Food"
+            error="Second error, why don't you type it correctly?"
+            containerStyle={styles.input}
+          />
+          <TextInput
+            label="Food name Food"
+            placeholder="Food name placeholder"
+            containerStyle={styles.input}
+          />
+          <TextInput
+            disabled
+            label="Food name Food"
+            placeholder="Food name placeholder"
             error="Second error, why don't you type it correctly?"
             containerStyle={styles.input}
           />

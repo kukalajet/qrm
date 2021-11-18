@@ -47,7 +47,7 @@ const NewTextInput = ({
   const [hovered, setHovered] = useState<boolean>(false);
 
   const color = getActiveColor(state, focused, hovered);
-  const styles = useStyles({ focused, hovered, width, color });
+  const styles = useStyles({ focused, hovered, disabled, width, color });
 
   useEffect(() => {
     if (disabled) {
@@ -103,7 +103,7 @@ const NewTextInput = ({
           style={styles.input}
         />
       </View>
-      {!!error && (
+      {!!error && !disabled && (
         <Text numberOfLines={1} style={[styles.error, errorStyle]}>
           {error}
         </Text>
@@ -115,7 +115,7 @@ const NewTextInput = ({
 function getActiveColor(state?: State, focused?: boolean, hovered?: boolean) {
   const { colors } = useTheme();
 
-  if (state === "disabled") return `${colors.surface}90`;
+  if (state === "disabled") return `${colors.onSurface}25`;
   if (state === "error") {
     if (focused) return colors.error;
     if (hovered) return `${colors.error}97`;
@@ -125,18 +125,19 @@ function getActiveColor(state?: State, focused?: boolean, hovered?: boolean) {
   if (focused) return colors.primary;
   if (hovered) return colors.primaryVariant;
 
-  return `${colors.onSurface}50`;
+  return `${colors.onSurface}75`;
 }
 
 type StylesProps = {
   focused?: boolean;
   hovered?: boolean;
+  disabled?: boolean;
   color?: string;
   width?: string | number;
 };
 
 const useStyles = makeStyles(
-  ({ focused, hovered, color, width }: StylesProps) => {
+  ({ focused, hovered, disabled, color, width }: StylesProps) => {
     const { colors } = useTheme();
 
     const shadowOffsetWidth = focused ? 2 : 0;
@@ -154,11 +155,11 @@ const useStyles = makeStyles(
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        borderWidth: 1.5,
+        borderWidth: hovered || focused ? 1.5 : 1.125,
         borderRadius: 8,
         borderColor: color,
         shadowColor: color,
-        backgroundColor: colors.surface,
+        backgroundColor: disabled ? `${colors.onSurface}10` : colors.surface,
         shadowOffset: { width: shadowOffsetWidth, height: shadowOffsetHeight },
         shadowOpacity: shadowOpacity,
         shadowRadius: shadowRadius,
@@ -176,7 +177,7 @@ const useStyles = makeStyles(
       label: {
         fontSize: 16,
         paddingHorizontal: 8,
-        color: colors.onBackground,
+        color: !disabled ? colors.onBackground : `${colors.onBackground}75`,
         fontFamily: "Roboto-Medium",
       },
       error: {
