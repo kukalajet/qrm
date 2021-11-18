@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { makeStyles } from "../../hooks";
+import { Feather } from "@expo/vector-icons";
 
 type State = "default" | "error" | "disabled";
 
@@ -102,6 +103,9 @@ const NewTextInput = ({
           editable={!disabled}
           style={styles.input}
         />
+        {!!error && (
+          <Feather name="x" size={20} color={color} style={styles.icon} />
+        )}
       </View>
       {!!error && !disabled && (
         <Text numberOfLines={1} style={[styles.error, errorStyle]}>
@@ -186,6 +190,7 @@ const useStyles = makeStyles(
         color: colors.error,
         fontFamily: "Roboto-Light",
       },
+      icon: { paddingEnd: 8 },
     };
   }
 );

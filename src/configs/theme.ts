@@ -12,11 +12,13 @@ const theme = {
     background: "#FFFFFF",
     surface: "#FFFFFF",
     error: "#B00020",
+    success: "#2E7D32",
     onPrimary: "#FFFFFF",
-    onSecondary: "#000000",
-    onBackground: "#000000",
-    onSurface: "#000000",
+    onSecondary: "#212121",
+    onBackground: "#212121",
+    onSurface: "#212121",
     onError: "#FFFFFF",
+    onSuccess: "#FFFFFF",
   },
 };
 
