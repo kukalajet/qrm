@@ -7,6 +7,7 @@ import {
   TextInputFocusEventData,
   StyleProp,
   ViewStyle,
+  TextStyle,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { makeStyles } from "../../hooks";
@@ -23,6 +24,8 @@ type Props = {
   disabled?: boolean;
   width?: string | number;
   containerStyle?: StyleProp<ViewStyle>;
+  labelStyle?: StyleProp<TextStyle>;
+  errorStyle?: StyleProp<TextStyle>;
 };
 
 const NewTextInput = ({
@@ -35,6 +38,8 @@ const NewTextInput = ({
   disabled,
   width = "100%",
   containerStyle,
+  labelStyle,
+  errorStyle,
 }: Props) => {
   const [state, setState] = useState<State>("default");
   const [currentValue, setCurrentValue] = useState<string | undefined>(value);
@@ -82,7 +87,7 @@ const NewTextInput = ({
   return (
     <View style={[styles.container, containerStyle]}>
       {!!label && (
-        <Text numberOfLines={1} style={styles.label}>
+        <Text numberOfLines={1} style={[styles.label, labelStyle]}>
           {label}
         </Text>
       )}
@@ -99,7 +104,7 @@ const NewTextInput = ({
         />
       </View>
       {!!error && (
-        <Text numberOfLines={1} style={styles.error}>
+        <Text numberOfLines={1} style={[styles.error, errorStyle]}>
           {error}
         </Text>
       )}
@@ -120,7 +125,7 @@ function getActiveColor(state?: State, focused?: boolean, hovered?: boolean) {
   if (focused) return colors.primary;
   if (hovered) return colors.primaryVariant;
 
-  return colors.secondary;
+  return `${colors.onSurface}50`;
 }
 
 type StylesProps = {
@@ -149,7 +154,7 @@ const useStyles = makeStyles(
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
-        borderWidth: 2,
+        borderWidth: 1.5,
         borderRadius: 8,
         borderColor: color,
         shadowColor: color,
@@ -161,8 +166,8 @@ const useStyles = makeStyles(
       },
       input: {
         flex: 1,
-        paddingVertical: 6,
         paddingHorizontal: 8,
+        paddingVertical: 8,
         alignItems: "center",
         justifyContent: "center",
         fontSize: 16,
@@ -172,11 +177,13 @@ const useStyles = makeStyles(
         fontSize: 16,
         paddingHorizontal: 8,
         color: colors.onBackground,
+        fontFamily: "Roboto-Medium",
       },
       error: {
         fontSize: 12,
         paddingHorizontal: 8,
         color: colors.error,
+        fontFamily: "Roboto-Light",
       },
     };
   }
