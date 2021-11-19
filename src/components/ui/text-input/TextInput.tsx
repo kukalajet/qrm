@@ -182,13 +182,13 @@ const useStyles = makeStyles(
         fontSize: 16,
         paddingHorizontal: 8,
         color: !disabled ? colors.onBackground : `${colors.onBackground}75`,
-        fontFamily: "Roboto-Medium",
+        fontFamily: "SF-Pro-Rounded-Regular",
       },
       error: {
         fontSize: 12,
         paddingHorizontal: 8,
         color: colors.error,
-        fontFamily: "Roboto-Light",
+        fontFamily: "SF-Pro-Rounded-Regular",
       },
       icon: { paddingEnd: 8 },
     };

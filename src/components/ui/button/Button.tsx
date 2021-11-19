@@ -29,7 +29,7 @@ const Button = ({
   return (
     <Pressable onPress={onPress} style={[styles.container, containerStyle]}>
       {!!icon && <View style={styles.icon}>{icon}</View>}
-      <Text>{label}</Text>
+      <Text style={styles.label}>{label}</Text>
     </Pressable>
   );
 };
@@ -53,6 +53,9 @@ const useStyles = makeStyles(({ width, height }: StylesProps) => {
       backgroundColor: colors.primary,
     },
     label: {
+      fontSize: 24,
+      fontFamily: "SF-Pro-Rounded-Medium",
+      color: colors.onPrimary,
       paddingHorizontal: 16,
     },
     icon: {
