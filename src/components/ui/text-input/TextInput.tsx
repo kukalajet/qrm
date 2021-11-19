@@ -29,7 +29,7 @@ type Props = {
   errorStyle?: StyleProp<TextStyle>;
 };
 
-const NewTextInput = ({
+const TextInput = ({
   value,
   placeholder,
   label,
@@ -195,4 +195,4 @@ const useStyles = makeStyles(
   }
 );
 
-export default NewTextInput;
+export default TextInput;
