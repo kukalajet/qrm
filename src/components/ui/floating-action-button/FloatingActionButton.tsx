@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Pressable, View } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
-import { makeStyles } from "../../hooks";
+import { makeStyles } from "../../../hooks";
 
 type Props = {
   iconName?: string;

@@ -8,7 +8,7 @@ import {
 } from "@gorhom/bottom-sheet";
 import { Feather } from "@expo/vector-icons";
 import { useTheme } from "@react-navigation/native";
-import { makeStyles } from "../../hooks";
+import { makeStyles } from "../../../hooks";
 
 type Props = {
   open: boolean;

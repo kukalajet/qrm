@@ -10,7 +10,7 @@ import {
   TextStyle,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
-import { makeStyles } from "../../hooks";
+import { makeStyles } from "../../../hooks";
 import { Feather } from "@expo/vector-icons";
 
 type State = "default" | "error" | "disabled";
