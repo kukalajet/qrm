@@ -16,6 +16,9 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   const { colors } = useTheme();
   const styles = useStyles();
 
+  // testing
+  const [loading, setLoading] = useState<boolean>(false);
+
   return (
     <SafeAreaView style={styles.container}>
       <TextInput label="Fo" multiline containerStyle={styles.input} />
@@ -37,8 +40,28 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         containerStyle={styles.input}
       />
       <Button
-        label="test"
+        label="Test"
         onPress={() => console.log("PRESSED!!!")}
+        containerStyle={styles.button}
+      />
+      <Button
+        label="Test"
+        loading={loading}
+        onPress={() => setLoading((value) => !value)}
+        containerStyle={styles.button}
+      />
+      <Button
+        label="Test"
+        type="outlined"
+        loading={loading}
+        onPress={() => setLoading((value) => !value)}
+        containerStyle={styles.button}
+      />
+      <Button
+        label="Test"
+        type="text"
+        loading={loading}
+        onPress={() => setLoading((value) => !value)}
         containerStyle={styles.button}
       />
       <Modal
@@ -79,9 +102,9 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
             containerStyle={styles.input}
           />
           <Button
-            label="test"
+            label="Test"
             height={48}
-            onPress={() => console.log("PRESSED!!!")}
+            onPress={() => console.log("PRsSSED!!!")}
             containerStyle={styles.button}
           />
         </React.Fragment>

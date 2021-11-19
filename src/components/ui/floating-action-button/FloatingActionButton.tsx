@@ -13,7 +13,7 @@ const FloatingActionButton = ({ iconName = "plus", onPress }: Props) => {
   const [pressed, setPressed] = useState<boolean>(false);
 
   const { colors } = useTheme();
-  const styles = useStyles({ pressed: pressed });
+  const styles = useStyles({ pressed });
 
   return (
     <View style={styles.container}>
