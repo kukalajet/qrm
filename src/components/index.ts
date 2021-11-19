@@ -1,1 +1,1 @@
-export { FloatingActionButton, Modal, TextInput } from "./ui";
+export { FloatingActionButton, Modal, TextInput, Button } from "./ui";

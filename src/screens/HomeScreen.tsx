@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { SafeAreaView, View } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { FloatingActionButton, Modal, TextInput } from "../components";
+import { FloatingActionButton, Modal, TextInput, Button } from "../components";
 import { makeStyles } from "../hooks";
 import { useTheme } from "@react-navigation/native";
 
@@ -35,6 +35,11 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         placeholder="Food name placeholder"
         error="Second error, why don't you type it correctly?"
         containerStyle={styles.input}
+      />
+      <Button
+        label="test"
+        onPress={() => console.log("PRESSED!!!")}
+        containerStyle={styles.button}
       />
       <Modal
         label="Test Hey"
@@ -73,6 +78,12 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
             error="Second error, why don't you type it correctly?"
             containerStyle={styles.input}
           />
+          <Button
+            label="test"
+            height={48}
+            onPress={() => console.log("PRESSED!!!")}
+            containerStyle={styles.button}
+          />
         </React.Fragment>
       </Modal>
       <FloatingActionButton onPress={() => setOpen((state) => !state)} />
@@ -87,6 +98,10 @@ const useStyles = makeStyles(({}: StylesProps) => ({
   input: {
     paddingHorizontal: 16,
     paddingVertical: 8,
+  },
+  button: {
+    marginHorizontal: 16,
+    marginVertical: 8,
   },
 }));
 
