@@ -89,10 +89,10 @@ const useStyles = makeStyles(
         fontSize: 24,
         fontFamily: "SF-Pro-Rounded-Medium",
         color: labelColor,
-        paddingHorizontal: 16,
+        paddingHorizontal: 4,
       },
       icon: {
-        paddingHorizontal: 16,
+        paddingHorizontal: 4,
       },
     };
   }

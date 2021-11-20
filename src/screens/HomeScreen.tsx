@@ -4,6 +4,8 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { FloatingActionButton, Modal, TextInput, Button } from "../components";
 import { makeStyles } from "../hooks";
 import { useTheme } from "@react-navigation/native";
+import { Feather } from "@expo/vector-icons";
+import theme from "../configs/theme";
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParams,
@@ -42,6 +44,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
       <Button
         label="Test"
         onPress={() => console.log("PRESSED!!!")}
+        icon={<Feather name="arrow-left" size={24} color={colors.onPrimary} />}
         containerStyle={styles.button}
       />
       <Button
@@ -55,6 +58,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         type="outlined"
         loading={loading}
         onPress={() => setLoading((value) => !value)}
+        icon={<Feather name="arrow-up" size={24} color={colors.primary} />}
         containerStyle={styles.button}
       />
       <Button
@@ -62,6 +66,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         type="text"
         loading={loading}
         onPress={() => setLoading((value) => !value)}
+        icon={<Feather name="award" size={24} color={colors.primary} />}
         containerStyle={styles.button}
       />
       <Modal
