@@ -30,7 +30,7 @@ const Button = ({
   icon,
   onPress,
   width,
-  height = 40,
+  height = 48,
   loading,
   containerStyle,
 }: Props) => {

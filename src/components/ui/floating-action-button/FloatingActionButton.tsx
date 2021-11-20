@@ -10,6 +10,7 @@ type Props = {
   onPress: () => void;
 };
 
+// https://github.com/facebook/react-native/issues/28697
 const FloatingActionButton = ({ iconName = "plus", onPress }: Props) => {
   const { colors } = useTheme();
   const styles = useStyles();
@@ -18,7 +19,7 @@ const FloatingActionButton = ({ iconName = "plus", onPress }: Props) => {
     "worklet";
 
     return {
-      opacity: hovered || pressed ? 0.5 : 1,
+      opacity: hovered || pressed ? 0.75 : 1,
       scale: hovered || pressed ? 0.9 : 1,
     };
   }, []);
@@ -51,6 +52,7 @@ const useStyles = makeStyles(({}: StylesProps) => {
     },
     fab: {
       borderRadius: 28,
+      margin: 8,
       backgroundColor: colors.primary,
       shadowColor: colors.onBackground,
       shadowOffset: { width: 2, height: 2 },

@@ -5,7 +5,8 @@ import { FloatingActionButton, Modal, TextInput, Button } from "../components";
 import { makeStyles } from "../hooks";
 import { useTheme } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
-import theme from "../configs/theme";
+import { ScrollView } from "react-native-gesture-handler";
+import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParams,
@@ -23,115 +24,115 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <TextInput label="Fo" multiline containerStyle={styles.input} />
-      <TextInput
-        label="Food name Food"
-        error="Second error, why don't you type it correctly?"
-        containerStyle={styles.input}
-      />
-      <TextInput
-        label="Food name Food"
-        placeholder="Food name placeholder"
-        containerStyle={styles.input}
-      />
-      <TextInput
-        disabled
-        label="Food name Food"
-        placeholder="Food name placeholder"
-        error="Second error, why don't you type it correctly?"
-        containerStyle={styles.input}
-      />
-      <View
-        style={{
-          paddingVertical: 16,
-        }}
-      >
-        <Button
-          label="Test"
-          onPress={() => console.log("PRESSED!!!")}
-          icon={
-            <Feather name="arrow-left" size={24} color={colors.onPrimary} />
-          }
-          containerStyle={styles.button}
+      <ScrollView>
+        <TextInput label="Fo" multiline containerStyle={styles.input} />
+        <TextInput
+          label="Food name Food"
+          error="Second error, why don't you type it correctly?"
+          containerStyle={styles.input}
         />
-        <Button
-          label="Test"
-          loading={loading}
-          onPress={() => setLoading((value) => !value)}
-          containerStyle={styles.button}
+        <TextInput
+          label="Food name Food"
+          placeholder="Food name placeholder"
+          containerStyle={styles.input}
         />
-        <Button
-          label="Test"
-          type="outlined"
-          loading={loading}
-          // onPress={() => setLoading((value) => !value)}
-          onPress={() => console.log("PRESSED!!!")}
-          icon={<Feather name="arrow-up" size={24} color={colors.primary} />}
-          containerStyle={styles.button}
+        <TextInput
+          disabled
+          label="Food name Food"
+          placeholder="Food name placeholder"
+          error="Second error, why don't you type it correctly?"
+          containerStyle={styles.input}
         />
-        <Button
-          label="Test"
-          type="text"
-          loading={loading}
-          // onPress={() => setLoading((value) => !value)}
-          onPress={() => console.log("PRESSED!!!")}
-          icon={<Feather name="award" size={24} color={colors.primary} />}
-          containerStyle={styles.button}
-        />
-      </View>
-      <Modal
-        label="Test Hey"
-        description="Test Hey description"
-        open={open}
-        onRemove={() => setOpen(false)}
-        onDismiss={() => setOpen(false)}
-      >
-        <React.Fragment>
-          <View
-            style={{
-              height: 50,
-              marginHorizontal: 16,
-              backgroundColor: "red",
-            }}
-          />
-          <TextInput
-            label="Food name Food"
-            multiline
-            containerStyle={styles.input}
-          />
-          <TextInput
-            label="Food name Food"
-            error="Second error, why don't you type it correctly?"
-            containerStyle={styles.input}
-          />
-          <TextInput
-            label="Food name Food"
-            placeholder="Food name placeholder"
-            containerStyle={styles.input}
-          />
-          <TextInput
-            disabled
-            label="Food name Food"
-            placeholder="Food name placeholder"
-            error="Second error, why don't you type it correctly?"
-            containerStyle={styles.input}
+        <View
+          style={{
+            paddingVertical: 16,
+          }}
+        >
+          <Button
+            label="Test"
+            onPress={() => console.log("PRESSED!!!")}
+            icon={
+              <Feather name="arrow-left" size={24} color={colors.onPrimary} />
+            }
+            containerStyle={styles.button}
           />
           <Button
             label="Test"
-            height={48}
-            onPress={() => console.log("PRsSSED!!!")}
+            loading={loading}
+            onPress={() => setLoading((value) => !value)}
             containerStyle={styles.button}
           />
-        </React.Fragment>
-      </Modal>
+          <Button
+            label="Test"
+            type="outlined"
+            loading={loading}
+            // onPress={() => setLoading((value) => !value)}
+            onPress={() => console.log("PRESSED!!!")}
+            icon={<Feather name="arrow-up" size={24} color={colors.primary} />}
+            containerStyle={styles.button}
+          />
+          <Button
+            label="Test"
+            type="text"
+            loading={loading}
+            // onPress={() => setLoading((value) => !value)}
+            onPress={() => console.log("PRESSED!!!")}
+            icon={<Feather name="award" size={24} color={colors.primary} />}
+            containerStyle={styles.button}
+          />
+        </View>
+        <Modal
+          label="Test Hey"
+          description="Test Hey description"
+          open={open}
+          onRemove={() => setOpen(false)}
+          onDismiss={() => setOpen(false)}
+        >
+          <BottomSheetScrollView>
+            <View
+              style={{
+                height: 50,
+                marginHorizontal: 16,
+                backgroundColor: "red",
+              }}
+            />
+            <TextInput
+              label="Food name Food"
+              multiline
+              containerStyle={styles.input}
+            />
+            <TextInput
+              label="Food name Food"
+              error="Second error, why don't you type it correctly?"
+              containerStyle={styles.input}
+            />
+            <TextInput
+              label="Food name Food"
+              placeholder="Food name placeholder"
+              containerStyle={styles.input}
+            />
+            <TextInput
+              disabled
+              label="Food name Food"
+              placeholder="Food name placeholder"
+              error="Second error, why don't you type it correctly?"
+              containerStyle={styles.input}
+            />
+            <Button
+              label="Test"
+              height={48}
+              onPress={() => console.log("PRsSSED!!!")}
+              containerStyle={styles.button}
+            />
+          </BottomSheetScrollView>
+        </Modal>
+      </ScrollView>
       <FloatingActionButton onPress={() => setOpen((state) => !state)} />
     </SafeAreaView>
   );
 };
 
-type StylesProps = {};
-
-const useStyles = makeStyles(({}: StylesProps) => ({
+const useStyles = makeStyles(() => ({
   container: { flex: 1 },
   input: {
     paddingHorizontal: 16,
