@@ -41,34 +41,44 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
         error="Second error, why don't you type it correctly?"
         containerStyle={styles.input}
       />
-      <Button
-        label="Test"
-        onPress={() => console.log("PRESSED!!!")}
-        icon={<Feather name="arrow-left" size={24} color={colors.onPrimary} />}
-        containerStyle={styles.button}
-      />
-      <Button
-        label="Test"
-        loading={loading}
-        onPress={() => setLoading((value) => !value)}
-        containerStyle={styles.button}
-      />
-      <Button
-        label="Test"
-        type="outlined"
-        loading={loading}
-        onPress={() => setLoading((value) => !value)}
-        icon={<Feather name="arrow-up" size={24} color={colors.primary} />}
-        containerStyle={styles.button}
-      />
-      <Button
-        label="Test"
-        type="text"
-        loading={loading}
-        onPress={() => setLoading((value) => !value)}
-        icon={<Feather name="award" size={24} color={colors.primary} />}
-        containerStyle={styles.button}
-      />
+      <View
+        style={{
+          paddingVertical: 16,
+        }}
+      >
+        <Button
+          label="Test"
+          onPress={() => console.log("PRESSED!!!")}
+          icon={
+            <Feather name="arrow-left" size={24} color={colors.onPrimary} />
+          }
+          containerStyle={styles.button}
+        />
+        <Button
+          label="Test"
+          loading={loading}
+          onPress={() => setLoading((value) => !value)}
+          containerStyle={styles.button}
+        />
+        <Button
+          label="Test"
+          type="outlined"
+          loading={loading}
+          // onPress={() => setLoading((value) => !value)}
+          onPress={() => console.log("PRESSED!!!")}
+          icon={<Feather name="arrow-up" size={24} color={colors.primary} />}
+          containerStyle={styles.button}
+        />
+        <Button
+          label="Test"
+          type="text"
+          loading={loading}
+          // onPress={() => setLoading((value) => !value)}
+          onPress={() => console.log("PRESSED!!!")}
+          icon={<Feather name="award" size={24} color={colors.primary} />}
+          containerStyle={styles.button}
+        />
+      </View>
       <Modal
         label="Test Hey"
         description="Test Hey description"

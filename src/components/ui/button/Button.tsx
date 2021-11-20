@@ -1,13 +1,14 @@
-import React, { ReactElement, useState } from "react";
+import React, { ReactElement, useCallback, useState } from "react";
 import {
-  Pressable,
   ActivityIndicator,
   StyleProp,
   Text,
   View,
   ViewStyle,
 } from "react-native";
+import { MotiPressable, MotiPressableProp } from "@motify/interactions";
 import { useTheme } from "@react-navigation/native";
+import { notificationAsync, NotificationFeedbackType } from "expo-haptics";
 import { makeStyles } from "../../../hooks";
 
 type Type = "contained" | "outlined" | "text";
@@ -33,17 +34,29 @@ const Button = ({
   loading,
   containerStyle,
 }: Props) => {
-  const [pressed, setPressed] = useState<boolean>(false);
   const { colors } = useTheme();
-  const styles = useStyles({ height, width, pressed, type });
+  const styles = useStyles({ height, width, type });
   const indicatorColor =
     type === "contained" ? colors.onPrimary : colors.primary;
 
+  const handleOnPress = useCallback(() => {
+    notificationAsync(NotificationFeedbackType.Success);
+    onPress();
+  }, []);
+
+  const animate: MotiPressableProp = useCallback(({ hovered, pressed }) => {
+    "worklet";
+
+    return {
+      opacity: hovered || pressed ? 0.5 : 1,
+      scale: hovered || pressed ? 0.9 : 1,
+    };
+  }, []);
+
   return (
-    <Pressable
-      onPress={onPress}
-      onPressIn={() => setPressed(true)}
-      onPressOut={() => setPressed(false)}
+    <MotiPressable
+      onPress={handleOnPress}
+      animate={animate}
       style={[styles.container, containerStyle]}
     >
       {!!loading ? (
@@ -54,48 +67,45 @@ const Button = ({
           <Text style={styles.label}>{label}</Text>
         </React.Fragment>
       )}
-    </Pressable>
+    </MotiPressable>
   );
 };
 
 type StylesProps = {
   width?: string | number;
   height?: number;
-  pressed: boolean;
   type: Type;
 };
 
-const useStyles = makeStyles(
-  ({ width, height, pressed, type }: StylesProps) => {
-    const { colors } = useTheme();
-    const backgroundColor = type === "contained" ? colors.primary : undefined;
-    const labelColor = type === "contained" ? colors.onPrimary : colors.primary;
-    const borderColor = type === "outlined" ? colors.primary : undefined;
-    const borderWidth = type === "outlined" ? 1 : 0;
+const useStyles = makeStyles(({ width, height, type }: StylesProps) => {
+  const { colors } = useTheme();
+  const backgroundColor = type === "contained" ? colors.primary : undefined;
+  const labelColor = type === "contained" ? colors.onPrimary : colors.primary;
+  const borderColor = type === "outlined" ? colors.primary : undefined;
+  const borderWidth = type === "outlined" ? 1 : 0;
 
-    return {
-      container: {
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-        height: height,
-        width: width,
-        borderRadius: height ? height / 2 : 20,
-        backgroundColor: !pressed ? backgroundColor : colors.primaryVariant,
-        borderColor: borderColor,
-        borderWidth: borderWidth,
-      },
-      label: {
-        fontSize: 24,
-        fontFamily: "SF-Pro-Rounded-Medium",
-        color: labelColor,
-        paddingHorizontal: 4,
-      },
-      icon: {
-        paddingHorizontal: 4,
-      },
-    };
-  }
-);
+  return {
+    container: {
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+      height: height,
+      width: width,
+      borderRadius: height ? height / 2 : 20,
+      backgroundColor: backgroundColor,
+      borderColor: borderColor,
+      borderWidth: borderWidth,
+    },
+    label: {
+      fontSize: 24,
+      fontFamily: "SF-Pro-Rounded-Medium",
+      color: labelColor,
+      paddingHorizontal: 4,
+    },
+    icon: {
+      paddingHorizontal: 4,
+    },
+  };
+});
 
 export default Button;
