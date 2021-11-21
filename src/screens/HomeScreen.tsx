@@ -12,6 +12,7 @@ import { useTheme } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
+import { MenuCreationForm } from "../forms/menu";
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParams,
@@ -93,41 +94,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
           onDismiss={() => setOpen(false)}
         >
           <BottomSheetScrollView>
-            <View
-              style={{
-                height: 50,
-                marginHorizontal: 16,
-                backgroundColor: "red",
-              }}
-            />
-            <TextInput
-              label="Food name Food"
-              multiline
-              containerStyle={styles.input}
-            />
-            <TextInput
-              label="Food name Food"
-              error="Second error, why don't you type it correctly?"
-              containerStyle={styles.input}
-            />
-            <TextInput
-              label="Food name Food"
-              placeholder="Food name placeholder"
-              containerStyle={styles.input}
-            />
-            <TextInput
-              disabled
-              label="Food name Food"
-              placeholder="Food name placeholder"
-              error="Second error, why don't you type it correctly?"
-              containerStyle={styles.input}
-            />
-            <Button
-              label="Test"
-              height={48}
-              onPress={() => console.log("PRsSSED!!!")}
-              containerStyle={styles.button}
-            />
+            <MenuCreationForm onPress={() => setOpen((value) => !value)} />
           </BottomSheetScrollView>
         </Modal>
       </ScrollView>

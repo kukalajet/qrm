@@ -20,6 +20,7 @@ type Props = {
   placeholder?: string;
   label?: string;
   error?: string;
+  onBlur?: (event: NativeSyntheticEvent<TextInputFocusEventData>) => void;
   onChangeText?: (value: string) => void;
   multiline?: boolean;
   disabled?: boolean;
@@ -35,6 +36,7 @@ const TextInput = ({
   label,
   error,
   onChangeText,
+  onBlur,
   multiline,
   disabled,
   width = "100%",
@@ -71,9 +73,10 @@ const TextInput = ({
   );
 
   const handleOnBlur = useCallback(
-    (_: NativeSyntheticEvent<TextInputFocusEventData>) => {
+    (event: NativeSyntheticEvent<TextInputFocusEventData>) => {
       setFocused(false);
       setHovered(false);
+      if (onBlur) onBlur(event);
     },
     []
   );

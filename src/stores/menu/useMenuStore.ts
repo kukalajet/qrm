@@ -17,22 +17,25 @@ type MenuStoreType = {
 
 const useMenuStore = create<MenuStoreType>((set, get) => ({
   menus: [],
-  status: Status.Initial,
+  status: "initial",
   fetchMenus: async () => {
     const status = get().status;
-    if (status !== Status.Initial) set(() => ({ status: Status.Initial }));
+    if (status !== "loading") set(() => ({ status: "loading" }));
     const menus = await fetchMenus();
-    set((_) => ({ menus: menus || [], status: Status.Success }));
+    set(() => ({ menus: menus || [], status: "success" }));
   },
   createMenu: async (menu) => {
+    const status = get().status;
+    if (status !== "loading") set(() => ({ status: "loading" }));
     const created = await createMenu(menu);
     if (!created) {
       __DEV__ && console.log(`given menu: ${menu} has not been created`);
+      set(() => ({ status: "failure" }));
       return null;
     }
     const menus = get().menus;
     const newMenus = menus.concat(created);
-    set((_) => ({ menus: newMenus }));
+    set(() => ({ menus: newMenus, status: "success" }));
   },
   updateMenu: async (menu) => {
     const updated = await updateMenu(menu);
