@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import { StyleProp, View, ViewStyle } from "react-native";
 import { MotiPressable, MotiPressableProp } from "@motify/interactions";
 import { useTheme } from "@react-navigation/native";
-import { createIconSetFromFontello, Feather } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import { makeStyles } from "../../../hooks";
 
 type Alignment = "left" | "center" | "right";
@@ -60,7 +60,7 @@ const useStyles = makeStyles(({ alignment }: StylesProps) => {
     container: {
       alignSelf: "center",
       position: "absolute",
-      bottom: 56,
+      bottom: 40,
       left: left,
       right: right,
     },

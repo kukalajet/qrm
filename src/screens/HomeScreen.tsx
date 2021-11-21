@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { SafeAreaView, View } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { Modal, TextInput, Button } from "../components/ui";
-import { BottomButtonGroup } from "../components/menu";
+import {
+  Modal,
+  TextInput,
+  Button,
+  FloatingActionButton,
+} from "../components/ui";
 import { makeStyles } from "../hooks";
 import { useTheme } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
-import { Ionicons } from "@expo/vector-icons";
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParams,
@@ -80,6 +83,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
             icon={<Feather name="award" size={24} color={colors.primary} />}
             containerStyle={styles.button}
           />
+          <View style={{ height: 200, backgroundColor: colors.background }} />
         </View>
         <Modal
           label="Test Hey"
@@ -127,14 +131,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
           </BottomSheetScrollView>
         </Modal>
       </ScrollView>
-      <BottomButtonGroup
-        leftButtonLabel="Generate QR"
-        onLeftButtonPress={() => console.log("button pressed")}
-        onFabPress={() => setOpen((state) => !state)}
-        leftButtonIcon={
-          <Ionicons name="ios-qr-code" size={24} color={colors.onPrimary} />
-        }
-      />
+      <FloatingActionButton onPress={() => setOpen((state) => !state)} />
     </SafeAreaView>
   );
 };

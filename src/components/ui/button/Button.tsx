@@ -1,4 +1,4 @@
-import React, { ReactElement, useCallback, useState } from "react";
+import React, { ReactElement, useCallback } from "react";
 import {
   ActivityIndicator,
   StyleProp,
