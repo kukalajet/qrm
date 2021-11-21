@@ -1,31 +1,41 @@
 import React, { useCallback, useState } from "react";
-import { View } from "react-native";
+import { StyleProp, View, ViewStyle } from "react-native";
 import { MotiPressable, MotiPressableProp } from "@motify/interactions";
 import { useTheme } from "@react-navigation/native";
-import { Feather } from "@expo/vector-icons";
+import { createIconSetFromFontello, Feather } from "@expo/vector-icons";
 import { makeStyles } from "../../../hooks";
+
+type Alignment = "left" | "center" | "right";
 
 type Props = {
   iconName?: string;
+  alignment?: Alignment;
   onPress: () => void;
+  fabContainer?: StyleProp<ViewStyle>;
+  containerStyle?: StyleProp<ViewStyle>;
 };
 
 // https://github.com/facebook/react-native/issues/28697
-const FloatingActionButton = ({ iconName = "plus", onPress }: Props) => {
+const FloatingActionButton = ({
+  iconName = "plus",
+  alignment = "center",
+  onPress,
+  containerStyle,
+}: Props) => {
   const { colors } = useTheme();
-  const styles = useStyles();
+  const styles = useStyles({ alignment });
 
   const animate: MotiPressableProp = useCallback(({ hovered, pressed }) => {
     "worklet";
 
     return {
-      opacity: hovered || pressed ? 0.75 : 1,
-      scale: hovered || pressed ? 0.9 : 1,
+      opacity: pressed ? 0.75 : 1,
+      scale: pressed ? 0.9 : 1,
     };
   }, []);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, containerStyle]}>
       <MotiPressable onPress={onPress} animate={animate} style={styles.fab}>
         <Feather
           // @ts-expect-error: there is no icon name type provided
@@ -39,16 +49,20 @@ const FloatingActionButton = ({ iconName = "plus", onPress }: Props) => {
   );
 };
 
-type StylesProps = {};
+type StylesProps = { alignment: Alignment };
 
-const useStyles = makeStyles(({}: StylesProps) => {
+const useStyles = makeStyles(({ alignment }: StylesProps) => {
   const { colors } = useTheme();
+  const left = alignment === "left" ? 16 : undefined;
+  const right = alignment === "right" ? 16 : undefined;
 
   return {
     container: {
       alignSelf: "center",
       position: "absolute",
       bottom: 56,
+      left: left,
+      right: right,
     },
     fab: {
       borderRadius: 28,

@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { FloatingActionButton } from "../components/ui";
 import { makeStyles } from "../hooks";
 
 type MenuScreenNavigationProp = NativeStackNavigationProp<
@@ -15,6 +16,7 @@ const MenuScreen = ({ navigation }: MenuScreenProps) => {
   return (
     <View style={styles.container}>
       <Text>Menu</Text>
+      <FloatingActionButton onPress={() => console.log("hey!")} />
     </View>
   );
 };

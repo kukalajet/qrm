@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { SafeAreaView, View } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { FloatingActionButton, Modal, TextInput, Button } from "../components";
+import { Modal, TextInput, Button } from "../components/ui";
+import { BottomButtonGroup } from "../components/menu";
 import { makeStyles } from "../hooks";
 import { useTheme } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
+import { Ionicons } from "@expo/vector-icons";
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParams,
@@ -66,7 +68,6 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
             label="Test"
             type="outlined"
             loading={loading}
-            // onPress={() => setLoading((value) => !value)}
             onPress={() => console.log("PRESSED!!!")}
             icon={<Feather name="arrow-up" size={24} color={colors.primary} />}
             containerStyle={styles.button}
@@ -75,8 +76,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
             label="Test"
             type="text"
             loading={loading}
-            // onPress={() => setLoading((value) => !value)}
-            onPress={() => console.log("PRESSED!!!")}
+            onPress={() => navigation.navigate("Menu")}
             icon={<Feather name="award" size={24} color={colors.primary} />}
             containerStyle={styles.button}
           />
@@ -127,7 +127,14 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
           </BottomSheetScrollView>
         </Modal>
       </ScrollView>
-      <FloatingActionButton onPress={() => setOpen((state) => !state)} />
+      <BottomButtonGroup
+        leftButtonLabel="Generate QR"
+        onLeftButtonPress={() => console.log("button pressed")}
+        onFabPress={() => setOpen((state) => !state)}
+        leftButtonIcon={
+          <Ionicons name="ios-qr-code" size={24} color={colors.onPrimary} />
+        }
+      />
     </SafeAreaView>
   );
 };

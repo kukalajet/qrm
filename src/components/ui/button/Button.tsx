@@ -15,7 +15,7 @@ type Type = "contained" | "outlined" | "text";
 
 type Props = {
   type?: Type;
-  label: String;
+  label: string;
   icon?: ReactElement;
   onPress: () => void;
   width?: string | number;
@@ -44,12 +44,13 @@ const Button = ({
     onPress();
   }, []);
 
+  // TODO: Force animation even on "fast press".
   const animate: MotiPressableProp = useCallback(({ hovered, pressed }) => {
     "worklet";
 
     return {
-      opacity: hovered || pressed ? 0.5 : 1,
-      scale: hovered || pressed ? 0.9 : 1,
+      opacity: pressed ? 0.5 : 1,
+      scale: pressed ? 0.9 : 1,
     };
   }, []);
 
