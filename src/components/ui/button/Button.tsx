@@ -1,6 +1,7 @@
 import React, { ReactElement, useCallback } from "react";
 import {
   ActivityIndicator,
+  Platform,
   StyleProp,
   Text,
   View,
@@ -40,7 +41,9 @@ const Button = ({
     type === "contained" ? colors.onPrimary : colors.primary;
 
   const handleOnPress = useCallback(() => {
-    notificationAsync(NotificationFeedbackType.Success);
+    if (Platform.OS !== "web") {
+      notificationAsync(NotificationFeedbackType.Success);
+    }
     onPress();
   }, []);
 
