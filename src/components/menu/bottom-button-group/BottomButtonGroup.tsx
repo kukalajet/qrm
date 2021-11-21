@@ -1,7 +1,7 @@
 import React, { ReactElement } from "react";
 import { View } from "react-native";
-import { Button, FloatingActionButton } from "../ui";
-import { makeStyles } from "../../hooks";
+import { Button, FloatingActionButton } from "../../ui";
+import { makeStyles } from "../../../hooks";
 
 type Props = {
   leftButtonLabel: string;

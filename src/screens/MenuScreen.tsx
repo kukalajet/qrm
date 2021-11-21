@@ -1,7 +1,6 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { FloatingActionButton } from "../components/ui";
 import { makeStyles } from "../hooks";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "@react-navigation/native";
