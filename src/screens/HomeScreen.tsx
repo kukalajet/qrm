@@ -11,8 +11,8 @@ import { makeStyles } from "../hooks";
 import { useTheme } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
-import { BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { MenuCreationForm } from "../forms/menu";
+import { PortalHost } from "@gorhom/portal";
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParams,
@@ -86,16 +86,18 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
           />
           <View style={{ height: 200, backgroundColor: colors.background }} />
         </View>
+
+        <PortalHost name="main" />
+
         <Modal
           label="Test Hey"
           description="Test Hey description"
           open={open}
+          withScrollView
           onRemove={() => setOpen(false)}
           onDismiss={() => setOpen(false)}
         >
-          <BottomSheetScrollView>
-            <MenuCreationForm onPress={() => setOpen((value) => !value)} />
-          </BottomSheetScrollView>
+          <MenuCreationForm onPress={() => setOpen((value) => !value)} />
         </Modal>
       </ScrollView>
       <FloatingActionButton onPress={() => setOpen((state) => !state)} />

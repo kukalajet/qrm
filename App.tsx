@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
-import { loadAsync, useFonts } from "expo-font";
+import React from "react";
+import { useFonts } from "expo-font";
+import { PortalProvider } from "@gorhom/portal";
 import AppLoading from "expo-app-loading";
 import { NavigationContainer } from "@react-navigation/native";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
@@ -31,7 +31,9 @@ export default function App() {
   return (
     <NavigationContainer theme={theme}>
       <BottomSheetModalProvider>
-        <Root />
+        <PortalProvider>
+          <Root />
+        </PortalProvider>
       </BottomSheetModalProvider>
     </NavigationContainer>
   );

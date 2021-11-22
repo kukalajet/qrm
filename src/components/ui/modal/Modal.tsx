@@ -5,6 +5,7 @@ import {
   BottomSheetBackdrop,
   BottomSheetBackdropProps,
   BottomSheetModal,
+  BottomSheetScrollView,
 } from "@gorhom/bottom-sheet";
 import { Feather } from "@expo/vector-icons";
 import { useTheme } from "@react-navigation/native";
@@ -16,7 +17,7 @@ type Props = {
   description?: string;
   size?: ModalSize;
   children: React.ReactChild;
-  withClose?: boolean;
+  withScrollView?: boolean;
   onDismiss: () => void;
   onRemove?: () => void;
 };
@@ -27,6 +28,7 @@ const Modal = ({
   label,
   description,
   size = "medium",
+  withScrollView = false,
   onDismiss,
   onRemove,
 }: Props) => {
@@ -89,7 +91,11 @@ const Modal = ({
             <Text style={styles.description}>{description}</Text>
           )}
         </React.Fragment>
-        {children}
+        {withScrollView ? (
+          <BottomSheetScrollView>children</BottomSheetScrollView>
+        ) : (
+          children
+        )}
       </BottomSheetModal>
     </React.Fragment>
   );
