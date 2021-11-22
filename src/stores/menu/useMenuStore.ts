@@ -6,9 +6,13 @@ import {
   deleteMenu,
 } from "../../services/menu";
 
+// WIP
+const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+
 type MenuStoreType = {
   menus: Menu[];
   status: Status;
+  error: string | null;
   fetchMenus: () => void;
   createMenu: (menu: Omit<Menu, "id" | "categories">) => void;
   updateMenu: (menu: Menu) => void;
@@ -18,24 +22,40 @@ type MenuStoreType = {
 const useMenuStore = create<MenuStoreType>((set, get) => ({
   menus: [],
   status: "initial",
+  error: null,
   fetchMenus: async () => {
     const status = get().status;
-    if (status !== "loading") set(() => ({ status: "loading" }));
+    const error = get().error;
+    if (status !== "loading" || error !== null) {
+      set(() => ({ status: "loading", error: null }));
+    }
     const menus = await fetchMenus();
+    console.log(menus);
     set(() => ({ menus: menus || [], status: "success" }));
   },
   createMenu: async (menu) => {
     const status = get().status;
-    if (status !== "loading") set(() => ({ status: "loading" }));
-    const created = await createMenu(menu);
-    if (!created) {
-      __DEV__ && console.log(`given menu: ${menu} has not been created`);
-      set(() => ({ status: "failure" }));
-      return null;
+    const error = get().error;
+    if (status !== "loading" || error !== null) {
+      set(() => ({ status: "loading", error: null }));
     }
-    const menus = get().menus;
-    const newMenus = menus.concat(created);
-    set(() => ({ menus: newMenus, status: "success" }));
+
+    // testing
+    await delay(5000);
+
+    try {
+      const created = await createMenu(menu);
+      if (!created) {
+        __DEV__ && console.log(`given menu: ${menu} has not been created`);
+        set(() => ({ status: "failure" }));
+        return null;
+      }
+      const menus = get().menus;
+      const newMenus = menus.concat(created);
+      set(() => ({ menus: newMenus, status: "success" }));
+    } catch (error) {
+      set(() => ({ status: "failure", error: "Failed to create the menu." }));
+    }
   },
   updateMenu: async (menu) => {
     const updated = await updateMenu(menu);

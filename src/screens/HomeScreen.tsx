@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { SafeAreaView, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { SafeAreaView, Text } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import {
   Modal,
@@ -13,6 +13,7 @@ import { Feather } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import { MenuCreationForm } from "../forms/menu";
 import { PortalHost } from "@gorhom/portal";
+import { useMenuStore } from "../stores/menu";
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParams,
@@ -25,70 +26,37 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   const { colors } = useTheme();
   const styles = useStyles();
 
+  const menus = useMenuStore((state) => state.menus);
+  const fetchMenus = useMenuStore((state) => state.fetchMenus);
+
   // testing
   const [loading, setLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    fetchMenus();
+  }, [navigation]);
 
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
-        <TextInput label="Fo" multiline containerStyle={styles.input} />
-        <TextInput
-          label="Food name Food"
-          error="Second error, why don't you type it correctly?"
-          containerStyle={styles.input}
+        <Button
+          label="Test"
+          onPress={() => console.log("PRESSED!!!")}
+          icon={
+            <Feather name="arrow-left" size={24} color={colors.onPrimary} />
+          }
+          containerStyle={styles.button}
         />
-        <TextInput
-          label="Food name Food"
-          placeholder="Food name placeholder"
-          containerStyle={styles.input}
+        <Button
+          label="Test"
+          type="text"
+          loading={loading}
+          onPress={() => navigation.navigate("Menu")}
+          icon={<Feather name="award" size={24} color={colors.primary} />}
+          containerStyle={styles.button}
         />
-        <TextInput
-          disabled
-          label="Food name Food"
-          placeholder="Food name placeholder"
-          error="Second error, why don't you type it correctly?"
-          containerStyle={styles.input}
-        />
-        <View
-          style={{
-            paddingVertical: 16,
-          }}
-        >
-          <Button
-            label="Test"
-            onPress={() => console.log("PRESSED!!!")}
-            icon={
-              <Feather name="arrow-left" size={24} color={colors.onPrimary} />
-            }
-            containerStyle={styles.button}
-          />
-          <Button
-            label="Test"
-            loading={loading}
-            onPress={() => setLoading((value) => !value)}
-            containerStyle={styles.button}
-          />
-          <Button
-            label="Test"
-            type="outlined"
-            loading={loading}
-            onPress={() => console.log("PRESSED!!!")}
-            icon={<Feather name="arrow-up" size={24} color={colors.primary} />}
-            containerStyle={styles.button}
-          />
-          <Button
-            label="Test"
-            type="text"
-            loading={loading}
-            onPress={() => navigation.navigate("Menu")}
-            icon={<Feather name="award" size={24} color={colors.primary} />}
-            containerStyle={styles.button}
-          />
-          <View style={{ height: 200, backgroundColor: colors.background }} />
-        </View>
-
+        <Text>{JSON.stringify(menus)}</Text>
         <PortalHost name="main" />
-
         <Modal
           label="Test Hey"
           description="Test Hey description"

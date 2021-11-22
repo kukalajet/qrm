@@ -1,13 +1,19 @@
 import { http } from "../http";
 import { AxiosResponse } from "axios";
+import { getAllMenus, addMenu, removeMenu } from "../mock-storage";
 
 /**
  * Retrieves all menus for the current user.
  * @returns All fetched menus
  */
 export const fetchMenus = async (): Promise<Menu[]> => {
-  const { data } = await http.get<Menu[]>("/menus");
-  return data;
+  // mocking call
+  const menus = await getAllMenus();
+  console.log(menus);
+  return menus;
+
+  // const { data } = await http.get<Menu[]>("/menus");
+  // return data;
 };
 
 /**
@@ -28,11 +34,16 @@ export const fetchMenu = async (id: Menu["id"]): Promise<Menu> => {
 export const createMenu = async (
   menu: Omit<Menu, "id" | "categories">
 ): Promise<Menu> => {
-  const { data } = await http.post<
-    Omit<Menu, "id" | "categories">,
-    AxiosResponse<Menu>
-  >("/menus", menu);
-  return data;
+  // mocking call
+  console.log(menu);
+  await addMenu(menu);
+  return menu as Menu;
+
+  // const { data } = await http.post<
+  //   Omit<Menu, "id" | "categories">,
+  //   AxiosResponse<Menu>
+  // >("/menus", menu);
+  // return data;
 };
 
 /**

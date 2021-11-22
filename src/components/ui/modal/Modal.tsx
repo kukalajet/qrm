@@ -92,7 +92,7 @@ const Modal = ({
           )}
         </React.Fragment>
         {withScrollView ? (
-          <BottomSheetScrollView>children</BottomSheetScrollView>
+          <BottomSheetScrollView>{children}</BottomSheetScrollView>
         ) : (
           children
         )}
