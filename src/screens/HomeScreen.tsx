@@ -14,8 +14,9 @@ import { ScrollView } from "react-native-gesture-handler";
 import { MenuCreationForm } from "../forms/menu";
 import { PortalHost } from "@gorhom/portal";
 import { useMenuStore } from "../stores/menu";
+import { Card } from "../components/menu";
 
-type HomeScreenNavigationProp = NativeStackNavigationProp<
+export type HomeScreenNavigationProp = NativeStackNavigationProp<
   RootStackParams,
   "Home"
 >;
@@ -39,6 +40,7 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
+        <Card menu={menus[0]} />
         <Button
           label="Test"
           onPress={() => console.log("PRESSED!!!")}
