@@ -1,17 +1,43 @@
 import React from "react";
-import { useFonts } from "expo-font";
-import { PortalProvider } from "@gorhom/portal";
-import AppLoading from "expo-app-loading";
 import { NavigationContainer } from "@react-navigation/native";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
+import { PortalProvider } from "@gorhom/portal";
+import { Feather } from "@expo/vector-icons";
+import { useFonts } from "expo-font";
+import AppLoading from "expo-app-loading";
+import { Text, View } from "react-native";
 import { RootStack } from "./src/navigation";
 import { HomeScreen, MenuScreen } from "./src/screens";
 import theme from "./src/configs/theme";
 
+const OptionsScreen = () => (
+  <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+    <Text>Options</Text>
+  </View>
+);
+
 const Root = () => (
-  <RootStack.Navigator initialRouteName="Home">
-    <RootStack.Screen name="Home" component={HomeScreen} />
+  <RootStack.Navigator
+    initialRouteName="Home"
+    screenOptions={{ headerTitleStyle: { fontFamily: "SF-Pro-Rounded-Bold" } }}
+  >
+    <RootStack.Screen
+      name="Home"
+      component={HomeScreen}
+      options={({ navigation }) => ({
+        headerRight: () => (
+          <Feather
+            name="settings"
+            size={24}
+            onPress={() => navigation.navigate("Options")}
+          />
+        ),
+        headerShadowVisible: false,
+        headerTitleAlign: "center",
+      })}
+    />
     <RootStack.Screen name="Menu" component={MenuScreen} />
+    <RootStack.Screen name="Options" component={OptionsScreen} />
   </RootStack.Navigator>
 );
 

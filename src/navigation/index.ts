@@ -1,1 +1,1 @@
-export { default as RootStack } from "./RootStack";
+export { RootStack } from "./root";
