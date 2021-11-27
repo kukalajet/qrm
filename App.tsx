@@ -2,7 +2,7 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 import { PortalProvider } from "@gorhom/portal";
-import { Feather } from "@expo/vector-icons";
+import { Feather, Ionicons } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 import AppLoading from "expo-app-loading";
 import { Text, View } from "react-native";
@@ -26,8 +26,8 @@ const Root = () => (
       component={HomeScreen}
       options={({ navigation }) => ({
         headerRight: () => (
-          <Feather
-            name="settings"
+          <Ionicons
+            name="ios-settings-sharp"
             size={24}
             onPress={() => navigation.navigate("Options")}
           />

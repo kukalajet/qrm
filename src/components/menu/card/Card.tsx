@@ -1,9 +1,11 @@
 import React, { useCallback } from "react";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { MotiPressable, MotiPressableProp } from "@motify/interactions";
+import { RoundIcon } from "../round-icon";
 import { makeStyles } from "../../../hooks";
 import { HomeScreenNavigationProp } from "../../../screens/HomeScreen";
+import { MaterialIcons } from "@expo/vector-icons";
 
 type Props = {
   menu: Menu;
@@ -40,10 +42,14 @@ const Card = ({ menu }: Props) => {
       animate={animate}
       style={styles.container}
     >
-      <Text>title: {title}</Text>
-      <Text>description: {description}</Text>
-      <Text>categoryLength: {categoryLength}</Text>
-      <Text>foodLength: {foodLength}</Text>
+      <RoundIcon icon={<MaterialIcons name="local-restaurant" size={24} />} />
+      <View style={styles.description}>
+        <Text style={styles.title}>{title}</Text>
+        <View style={styles.details}>
+          <Text style={styles.detail}>categories: {categoryLength}</Text>
+          <Text style={styles.detail}>items: {foodLength}</Text>
+        </View>
+      </View>
     </MotiPressable>
   );
 };
@@ -53,16 +59,28 @@ const useStyles = makeStyles(() => {
 
   return {
     container: {
-      padding: 16,
-      borderRadius: 24,
-      marginVertical: 8,
-      marginHorizontal: 16,
-      backgroundColor: colors.secondary,
-      shadowColor: colors.onBackground,
-      shadowOffset: { width: 4, height: 4 },
-      shadowOpacity: 0.2,
-      shadowRadius: 2,
-      elevation: 4,
+      paddingHorizontal: 16,
+      paddingVertical: 8,
+      flexDirection: "row",
+    },
+    description: {
+      flex: 1,
+      flexDirection: "column",
+      justifyContent: "center",
+    },
+    details: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+    },
+    title: {
+      fontSize: 20,
+      fontFamily: "SF-Pro-Rounded-Medium",
+      color: colors.onSecondary,
+    },
+    detail: {
+      fontSize: 16,
+      fontFamily: "SF-Pro-Rounded-Regular",
+      color: colors.onSecondary,
     },
   };
 });

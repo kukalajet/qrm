@@ -26,7 +26,8 @@ const List = <T extends unknown>({
         data={data}
         renderItem={renderItem}
         bounces={bounces}
-        contentContainerStyle={{ paddingBottom: 124 }}
+        keyExtractor={(_, index) => index.toString()}
+        contentContainerStyle={{ paddingTop: 8, paddingBottom: 124 }}
       />
     </View>
   );
