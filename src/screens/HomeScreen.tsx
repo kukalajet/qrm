@@ -6,6 +6,7 @@ import {
   TextInput,
   Button,
   FloatingActionButton,
+  List,
 } from "../components/ui";
 import { makeStyles } from "../hooks";
 import { useTheme } from "@react-navigation/native";
@@ -39,37 +40,21 @@ const HomeScreen = ({ navigation }: HomeScreenProps) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView>
-        <Card menu={menus[0]} />
-        <Button
-          label="Test"
-          onPress={() => console.log("PRESSED!!!")}
-          icon={
-            <Feather name="arrow-left" size={24} color={colors.onPrimary} />
-          }
-          containerStyle={styles.button}
-        />
-        <Button
-          label="Test"
-          type="text"
-          loading={loading}
-          onPress={() => navigation.navigate("Menu")}
-          icon={<Feather name="award" size={24} color={colors.primary} />}
-          containerStyle={styles.button}
-        />
-        <Text>{JSON.stringify(menus)}</Text>
-        <PortalHost name="main" />
-        <Modal
-          label="Test Hey"
-          description="Test Hey description"
-          open={open}
-          withScrollView
-          onRemove={() => setOpen(false)}
-          onDismiss={() => setOpen(false)}
-        >
-          <MenuCreationForm onPress={() => setOpen((value) => !value)} />
-        </Modal>
-      </ScrollView>
+      <List
+        label="Menus"
+        data={menus}
+        renderItem={({ item, index }) => <Card key={index} menu={item} />}
+      />
+      <Modal
+        label="Test Hey"
+        description="Test Hey description"
+        open={open}
+        withScrollView
+        onRemove={() => setOpen(false)}
+        onDismiss={() => setOpen(false)}
+      >
+        <MenuCreationForm onPress={() => setOpen((value) => !value)} />
+      </Modal>
       <FloatingActionButton onPress={() => setOpen((state) => !state)} />
     </SafeAreaView>
   );

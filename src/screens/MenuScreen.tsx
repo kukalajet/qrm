@@ -3,22 +3,27 @@ import { View, Text } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { makeStyles } from "../hooks";
 import { Ionicons } from "@expo/vector-icons";
-import { useTheme } from "@react-navigation/native";
+import { RouteProp, useTheme } from "@react-navigation/native";
 import { BottomButtonGroup } from "../components/menu";
 
 type MenuScreenNavigationProp = NativeStackNavigationProp<
   RootStackParams,
   "Menu"
 >;
-type MenuScreenProps = { navigation: MenuScreenNavigationProp };
+type ListScreenRouteProp = RouteProp<RootStackParams, "Menu">;
+type MenuScreenProps = {
+  navigation: MenuScreenNavigationProp;
+  route: ListScreenRouteProp;
+};
 
-const MenuScreen = ({ navigation }: MenuScreenProps) => {
+const MenuScreen = ({ navigation, route }: MenuScreenProps) => {
   const styles = useStyles();
   const { colors } = useTheme();
+  const menu = route.params?.menu;
 
   return (
     <View style={styles.container}>
-      <Text>Menu</Text>
+      <Text>{menu?.title}</Text>
       <BottomButtonGroup
         leftButtonLabel="Generate QR"
         onLeftButtonPress={() => console.log("button pressed")}
